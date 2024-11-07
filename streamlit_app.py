@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 #  Importa o Pandas, uma biblioteca para manipulação e análise de dados.
 import plotly.express as px
+import plotly
 # Importa o Plotly Express, uma biblioteca para criação de gráficos interativos.
 from query import *
 # Importa todas as funções e variáveis do módulo query, que pode incluir a função view_all_data() usada para obter dados de uma API.
@@ -86,23 +87,13 @@ if filtros("altitude"):
         step=1.0
     )
 # Exibe um controle deslizante para filtrar a altitude.
-# Definindo min e max de forma segura para o slider
-min_umidade = float(df["umidade"].min())
-max_umidade = float(df["umidade"].max())
 
-# Garantir que os valores não sejam iguais
-if min_umidade == max_umidade:
-    # Se os valores forem iguais, aumentar ou diminuir um valor pequeno para que o slider funcione
-    max_umidade += 0.1  # Aumenta o valor máximo em 0.1 para garantir que o slider tenha intervalo
-    min_umidade -= 0.1  # Diminui o valor mínimo em 0.1
-
-# Agora, o slider funcionará com os valores ajustados
 if filtros("umidade"):
     umidade_range = st.sidebar.slider(
         "Umidade (%)",
-        min_value=min_umidade,
-        max_value=max_umidade,
-        value=(min_umidade, max_umidade),
+        min_value=float(df["umidade"].min()),
+        max_value=float(df["umidade"].max()),
+        value=(float(df["umidade"].min()), float(df["umidade"].max())),
         step=0.1
     )
 # Exibe um controle deslizante para filtrar a umidade.

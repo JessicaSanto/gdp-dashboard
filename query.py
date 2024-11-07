@@ -22,5 +22,3 @@ def get_mysql_data(query):
 
     # Fechar a conexão
     conn.close()
-
-    return dataframe

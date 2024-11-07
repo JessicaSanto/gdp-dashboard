@@ -53,21 +53,21 @@ st.sidebar.header("Selecione o Filtro")
 
 
 # Exibir sliders apenas se o atributo correspondente for selecionado
-if filtros("temperatura"):
-# Exibe um controle deslizante (slider) na barra lateral para filtrar a temperatura, 
-# mas apenas se a temperatura estiver selecionada como eixo X ou Y.
+# Verifique se o DataFrame está sendo carregado corretamente
+if df is not None:
+    temperatura_min = float(df["temperatura"].min())
+    temperatura_max = float(df["temperatura"].max())
+
+    # Exibe o controle deslizante se os dados forem válidos
     temperatura_range = st.sidebar.slider(
         "Temperatura (°C)",
-        min_value=float(df["temperatura"].min()),
-    # Valor mínimo do slider, baseado nos dados carregados.
-        max_value=float(df["temperatura"].max()),
-    # Valor máximo do slider.
-        value=(float(df["temperatura"].min()), float(df["temperatura"].max())),
-    # Faixa de valores padrão selecionada.
+        min_value=temperatura_min,
+        max_value=temperatura_max,
+        value=(temperatura_min, temperatura_max),
         step=0.1
-    # Incremento para cada movimento do slider.
     )
-
+else:
+    st.error("Não foi possível carregar os dados!")
 if filtros("pressao"):
     pressao_range = st.sidebar.slider(
         "Pressão (hPa)",
